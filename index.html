@@ -19,30 +19,34 @@
         "Cataaa 😭",
         "Por faaa, di que sí 💘",
         "Goldita 🥺",
-        "Última oportunidad… ¿quieres ser mi San Valentín? 🥹"
+        "Última oportunidad… ¿quieres ser mi San Valentín? 🥹",
       ];
 
       function App() {
         const [noClicks, setNoClicks] = useState(0);
         const [isValentine, setIsValentine] = useState(false);
-        const yesButtonSize = (noClicks * 20) + 16;
+        const yesButtonSize = noClicks * 20 + 16;
 
-        const firstImg = "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
-        const secondImg = "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
+        const firstImg =
+          "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
+        const secondImg =
+          "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
 
         return (
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-            fontFamily: "Arial",
-            textAlign: "center"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+              fontFamily: "Arial",
+              textAlign: "center",
+            }}
+          >
             {!isValentine ? (
               <>
-                <img src={firstImg} />
+                <img src={firstImg} alt="bear" />
                 <h1>Cata, ¿quieres ser mi San Valentín? 💘</h1>
                 <div>
                   <button
@@ -55,13 +59,16 @@
                       color: "white",
                       border: "none",
                       borderRadius: "5px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Sí
                   </button>
+
                   <button
-                    onClick={() => setNoClicks(n => Math.min(n + 1, NO_PHRASES.length))}
+                    onClick={() =>
+                      setNoClicks((n) => Math.min(n + 1, NO_PHRASES.length))
+                    }
                     style={{
                       fontSize: "16px",
                       margin: "10px",
@@ -70,7 +77,7 @@
                       color: "white",
                       border: "none",
                       borderRadius: "5px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     {noClicks === 0 ? "No" : NO_PHRASES[noClicks - 1]}
@@ -79,10 +86,8 @@
               </>
             ) : (
               <>
-                <img src={secondImg} />
-                <h1 style={{ color: "pink" }}>
-                  Gracias amole 💖 te amo
-                </h1>
+                <img src={secondImg} alt="kisses" />
+                <h1 style={{ color: "pink" }}>Gracias amole 💖 te amo</h1>
               </>
             )}
           </div>
@@ -93,5 +98,3 @@
     </script>
   </body>
 </html>
-  );
-}
