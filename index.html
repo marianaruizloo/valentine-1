@@ -11,29 +11,236 @@
 
     <!-- Babel para JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      :root{
+        --bg1:#fff1f6;
+        --bg2:#ffe7ef;
+        --ink:#2b2b2b;
+        --muted:#6b7280;
+        --paper:#fffdfb;
+        --border:#f3c4d4;
+        --shadow: 0 18px 50px rgba(0,0,0,.12);
+        --shadow2: 0 10px 24px rgba(0,0,0,.10);
+        --pink:#ff5aa5;
+        --green:#22c55e;
+        --red:#ef4444;
+      }
+
+      *{ box-sizing: border-box; }
+      body{
+        margin:0;
+        min-height:100vh;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        color:var(--ink);
+        background:
+          radial-gradient(1200px 700px at 15% 10%, #ffe0ec 0%, transparent 60%),
+          radial-gradient(900px 600px at 90% 30%, #ffd6e6 0%, transparent 55%),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+        overflow:hidden;
+      }
+
+      /* corazones sutiles */
+      .hearts{
+        position:fixed; inset:0; pointer-events:none; opacity:.35;
+        background-image:
+          radial-gradient(circle at 20% 20%, rgba(255,90,165,.20) 0 2px, transparent 3px),
+          radial-gradient(circle at 70% 30%, rgba(255,90,165,.18) 0 2px, transparent 3px),
+          radial-gradient(circle at 40% 70%, rgba(255,90,165,.16) 0 2px, transparent 3px),
+          radial-gradient(circle at 85% 80%, rgba(255,90,165,.14) 0 2px, transparent 3px);
+        filter: blur(.2px);
+      }
+
+      .wrap{
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:24px;
+      }
+
+      .card{
+        width:min(520px, 100%);
+        background: var(--paper);
+        border: 2px solid rgba(243,196,212,.65);
+        border-radius: 26px;
+        box-shadow: var(--shadow);
+        position:relative;
+        overflow:hidden;
+      }
+
+      /* “papel” */
+      .card::before{
+        content:"";
+        position:absolute; inset:0;
+        background:
+          linear-gradient(transparent, rgba(0,0,0,.02)),
+          repeating-linear-gradient(
+            0deg,
+            rgba(0,0,0,.012) 0px,
+            rgba(0,0,0,.012) 1px,
+            transparent 10px,
+            transparent 22px
+          );
+        opacity:.55;
+        pointer-events:none;
+      }
+
+      .topbar{
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:18px 18px 0 18px;
+      }
+
+      .toBadge{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:8px 12px;
+        border-radius: 999px;
+        border:1px dashed rgba(255,90,165,.45);
+        background: rgba(255,90,165,.06);
+        color:var(--muted);
+        font-size: 13px;
+      }
+
+      .stamp{
+        width:54px; height:54px;
+        border-radius: 14px;
+        border:2px dashed rgba(255,90,165,.55);
+        background:
+          radial-gradient(circle at 30% 30%, rgba(255,90,165,.22), transparent 60%),
+          radial-gradient(circle at 70% 70%, rgba(255,90,165,.16), transparent 60%),
+          rgba(255,90,165,.08);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size: 22px;
+        box-shadow: var(--shadow2);
+        transform: rotate(6deg);
+      }
+
+      .content{
+        position:relative;
+        padding: 10px 22px 22px 22px;
+        text-align:center;
+      }
+
+      .gif{
+        width: 160px;
+        height:auto;
+        margin: 12px auto 6px;
+        display:block;
+        filter: drop-shadow(0 10px 14px rgba(0,0,0,.10));
+      }
+
+      h1{
+        margin: 10px 0 8px;
+        font-size: 26px;
+        letter-spacing:-.2px;
+      }
+
+      .sub{
+        margin:0 0 18px;
+        color:var(--muted);
+        font-size: 14px;
+      }
+
+      .btnRow{
+        display:flex;
+        gap:12px;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-top: 8px;
+      }
+
+      button{
+        border:0;
+        padding: 12px 18px;
+        border-radius: 14px;
+        cursor:pointer;
+        font-weight: 700;
+        box-shadow: 0 10px 18px rgba(0,0,0,.08);
+        transition: transform .08s ease, opacity .15s ease;
+      }
+      button:active{ transform: scale(.98); }
+      button:hover{ opacity: .95; }
+
+      .yes{
+        background: var(--green);
+        color:white;
+      }
+
+      .no{
+        background: var(--red);
+        color:white;
+        max-width: 100%;
+      }
+
+      .footerNote{
+        margin-top: 16px;
+        font-size: 12px;
+        color: rgba(107,114,128,.85);
+      }
+
+      .successTitle{
+        color: var(--pink);
+        font-size: 28px;
+        margin-top: 14px;
+      }
+
+      .confetti{
+        position:absolute; inset:-40px;
+        pointer-events:none;
+        opacity:.22;
+        background-image:
+          radial-gradient(circle, rgba(34,197,94,.35) 0 2px, transparent 3px),
+          radial-gradient(circle, rgba(255,90,165,.35) 0 2px, transparent 3px),
+          radial-gradient(circle, rgba(59,130,246,.28) 0 2px, transparent 3px);
+        background-size: 120px 120px, 160px 160px, 200px 200px;
+        animation: float 10s linear infinite;
+      }
+      @keyframes float {
+        from { transform: translateY(0px); }
+        to { transform: translateY(30px); }
+      }
+    </style>
   </head>
 
   <body>
+    <div class="hearts"></div>
     <div id="root"></div>
 
     <script type="text/babel">
-      const { useState } = React;
+      const { useMemo, useState } = React;
       const { createRoot } = ReactDOM;
 
       const NO_PHRASES = [
-        "¿De verdad, Cata? 💔",
-        "¿Segura, Cata? 🥺",
-        "Por faaa, ¿quieres ser mi San Valentín? 💖",
-        "Cataaa 😭",
-        "Por faaa, di que sí 💘",
-        "Goldita 🥺",
-        "Última oportunidad… ¿quieres ser mi San Valentín? 🥹",
+        "¿De verdad amole? 💔",
+        "¿Segura amolcito? 🥺",
+        "Por faa goldita 💖",
+        "Nooo chiquita 😭",
+        "Di que sí baby 💘",
+        "amooooor🥹",
       ];
 
+      function getParam(name, fallback) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name) || fallback;
+      }
+
       function App() {
+        const toName = useMemo(() => getParam("to", "Cata"), []);
+        const fromName = useMemo(() => getParam("from", "yo"), []);
+
         const [noClicks, setNoClicks] = useState(0);
         const [isValentine, setIsValentine] = useState(false);
-        const yesButtonSize = noClicks * 20 + 16;
+
+        const yesFont = Math.min(44, 16 + noClicks * 6);  // crece pero con límite
+        const yesPadY = 12 + noClicks * 2;
+        const yesPadX = 18 + noClicks * 3;
 
         const firstImg =
           "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
@@ -41,68 +248,61 @@
           "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
 
         return (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100vh",
-              fontFamily: "Arial",
-              textAlign: "center",
-            }}
-          >
-            {!isValentine ? (
-              <>
-                <img src={firstImg} alt="bear" />
-                <h1>Cata, ¿quieres ser mi San Valentín? 💘</h1>
+          <div className="wrap">
+            <div className="card">
+              {isValentine && <div className="confetti" />}
 
-                <div>
-                  <button
-                    onClick={() => setIsValentine(true)}
-                    style={{
-                      fontSize: `${yesButtonSize}px`,
-                      margin: "10px",
-                      padding: "10px 20px",
-                      backgroundColor: "green",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Sí
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      setNoClicks((n) =>
-                        Math.min(n + 1, NO_PHRASES.length)
-                      )
-                    }
-                    style={{
-                      fontSize: "16px",
-                      margin: "10px",
-                      padding: "10px 20px",
-                      backgroundColor: "red",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {noClicks === 0 ? "No" : NO_PHRASES[noClicks - 1]}
-                  </button>
+              <div className="topbar">
+                <div className="toBadge">
+                  <span>For:</span>
+                  <strong>{toName}</strong>
                 </div>
-              </>
-            ) : (
-              <>
-                <img src={secondImg} alt="kisses" />
-                <h1 style={{ color: "hotpink" }}>
-                  Gracias amole 💖 te amo
-                </h1>
-              </>
-            )}
+                <div className="stamp">💌</div>
+              </div>
+
+              <div className="content">
+                {!isValentine ? (
+                  <>
+                    <img className="gif" src={firstImg} alt="bear" />
+                    <h1>{toName}, will yo be my valentine mi cata? 💘</h1>
+                    <p className="sub">Una invitación oficial (y cute) ✨</p>
+
+                    <div className="btnRow">
+                      <button
+                        className="yes"
+                        onClick={() => setIsValentine(true)}
+                        style={{
+                          fontSize: `${yesFont}px`,
+                          padding: `${yesPadY}px ${yesPadX}px`,
+                          borderRadius: "16px",
+                        }}
+                      >
+                        Sí
+                      </button>
+
+                      <button
+                        className="no"
+                        onClick={() =>
+                          setNoClicks((n) => Math.min(n + 1, NO_PHRASES.length))
+                        }
+                      >
+                        {noClicks === 0 ? "No" : NO_PHRASES[noClicks - 1]}
+                      </button>
+                    </div>
+
+                    <div className="footerNote">
+                      Hecho con amor por <strong>{fromName}</strong> 💗
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <img className="gif" src={secondImg} alt="kisses" />
+                    <h1 className="successTitle">yeyyyy mi vida 💖</h1>
+                    <p className="sub">Gracias amole, te amo ✨</p>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         );
       }
