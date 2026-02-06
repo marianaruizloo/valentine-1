@@ -232,8 +232,8 @@
       }
 
       function App() {
-        const toName = useMemo(() => getParam("to", "Cata"), []);
-        const fromName = useMemo(() => getParam("from", "yo"), []);
+        const toName = useMemo(() => getParam("to", "Cata mi amor"), []);
+        const fromName = useMemo(() => getParam("from", "Mariana"), []);
 
         const [noClicks, setNoClicks] = useState(0);
         const [isValentine, setIsValentine] = useState(false);
@@ -264,7 +264,7 @@
                 {!isValentine ? (
                   <>
                     <img className="gif" src={firstImg} alt="bear" />
-                    <h1>{toName}, will yo be my valentine mi cata? 💘</h1>
+                    <h1>{toName}, will you be my valentine mi cata? 💘</h1>
                     <p className="sub">Una invitación oficial (y cute) ✨</p>
 
                     <div className="btnRow">
@@ -297,7 +297,7 @@
                 ) : (
                   <>
                     <img className="gif" src={secondImg} alt="kisses" />
-                    <h1 className="successTitle">yeyyyy mi vida 💖</h1>
+                    <h1 className="successTitle">yeyyyy mi vida te amooo 💖</h1>
                     <p className="sub">Gracias amole, te amo ✨</p>
                   </>
                 )}
